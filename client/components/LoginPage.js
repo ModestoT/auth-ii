@@ -27,7 +27,7 @@ class LoginPage extends React.Component {
     render() {
         return(
             <div className="login-wrapper">
-                <form onSubmit={(e) => this.login}>
+                <form onSubmit={this.login}>
                     <input type="text" name="username" placeholder="Username" value={this.state.username} onChange={this.handleInput} />
                     <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInput} />
                     <button>Login</button>

@@ -3,6 +3,7 @@ import { Route, withRouter } from 'react-router-dom';
 
 import './App.css';
 import LoginPage from '../components/LoginPage';
+import RegisterPage from '../components/RegisterPage';
 
 class App extends Component {
 
@@ -19,7 +20,7 @@ class App extends Component {
           <button onClick={this.signOut}>Signout</button>
         </nav>
         <Route exact path = "/" component={LoginPage} />
-        <Route path = "/register" component={} />
+        <Route path = "/register" component={RegisterPage} />
         <Route path = "/users" component={} />
       </div>
     );
