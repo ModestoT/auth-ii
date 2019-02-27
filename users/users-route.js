@@ -8,8 +8,14 @@ const secret = process.env.JWT_SECRET;
 
 const router = express.Router();
 
-router.get('/users', async (req, res) => {
-
+router.get('/users', validateUser, async (req, res) => {
+    try {
+        const users = await Users.getUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Unable to retrieve the list of Users'})
+    }
 });
 
 router.post('/login', async (req, res) => {
@@ -65,6 +71,24 @@ function generateToken(user) {
     };
 
     return webToken.sign(payload, secret, options);
-}
+};
+
+function validateUser(req, res, next) {
+    const token = req.headers.authorization;
+    if(token) {
+        webToken.verify(token, secret, (err, decodedToken) => {
+            if(err) {
+                res.status(401).json({ error: 'You are not authorized to access this information' });
+            } else {
+                req.decodedWebToken = decodedToken;
+                next();
+            }
+        });
+    } else {
+        res.status(401).json({ error: 'Token is invaild' });
+    }
+};
+
+
 
 module.exports = router;
