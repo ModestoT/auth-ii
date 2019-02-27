@@ -2,7 +2,7 @@ const db = require('../db/dbconfig.js');
 
 module.exports = {
     getUsers,
-    getUsersBy,
+    getUserBy,
     getUserById,
     addUser,
     remove
@@ -12,7 +12,7 @@ function getUsers() {
     return db('users');
 }
 
-function getUsersBy(username) {
+function getUserBy(username) {
     return db('users').where(username).first();
 }
 
