@@ -16,12 +16,10 @@ function getUsersBy(username) {
     return db('users').where(username).first();
 }
 
-function addUser(user) {
-    return db('users')
-        .insert(user)
-        .then(id => {
-            return getUserById(id);
-        });
+async function addUser(user) {
+    const [id] = await db('users').insert(user);
+
+    return getUserById(id);
 }
 
 function getUserById(id) {
