@@ -12,6 +12,10 @@ class UsersList extends React.Component {
             .get('/users')
             .then( res => this.setState({ users: res.data }))
             .catch( err => console.log(err));
+
+        if(!localStorage.getItem('AuthToken')){
+            this.props.history.push('/');
+        }
     }
 
     render() {

@@ -11,7 +11,7 @@ class App extends Component {
   signOut = e => {
     e.preventDefault();
     localStorage.clear();
-    this.history.push('/');
+    this.props.history.push('/');
   }
 
   render() {
