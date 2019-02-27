@@ -47,8 +47,9 @@ router.post('/register', async (req, res) => {
             newUser.password = hash;
 
             const user = await Users.addUser(newUser);
-
-            res.status(201).json(user);
+            const token = generateToken(user);
+            
+            res.status(201).json({user, token });
         } catch(error) {
             console.log(error);
             if(error.errno === 19) {

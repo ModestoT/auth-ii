@@ -22,7 +22,8 @@ class RegisterPage extends React.Component {
         makeAxios()
             .post('register', user)
             .then( res => {
-                this.props.history.push('/');
+                localStorage.setItem('AuthToken', res.data.token)
+                this.props.history.push('/users');
                 alert('Account Created!');
             })
             .catch( err => console.log(err));
