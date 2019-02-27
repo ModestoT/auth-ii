@@ -17,17 +17,21 @@ class RegisterPage extends React.Component {
     register = e => {
         e.preventDefault();
 
-        const user = { username, password, department };
+        const user = { username: this.state.username, password: this.state.password, department: this.state.department };
 
         makeAxios()
             .post('register', user)
-            .then( res => console.log(res))
-            .catch( err => console.log(error));
+            .then( res => {
+                this.props.history.push('/');
+                alert('Account Created!');
+            })
+            .catch( err => console.log(err));
     }
 
     render() {
         return(
             <div className="register-wrapper">
+                <h1>Register</h1>
                 <form onSubmit={this.register}>
                     <input type="text" name="username" placeholder="Username" value={this.state.username} onChange={this.handleInput} />
                     <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInput} />
