@@ -15,6 +15,7 @@ class UsersList extends React.Component {
 
         if(!localStorage.getItem('AuthToken')){
             this.props.history.push('/');
+            alert('Please sign in');
         }
     }
 

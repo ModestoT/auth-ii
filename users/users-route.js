@@ -9,8 +9,9 @@ const secret = process.env.JWT_SECRET;
 const router = express.Router();
 
 router.get('/users', validateUser, async (req, res) => {
+    const department = req.decodedWebToken.department;
     try {
-        const users = await Users.getUsers();
+        const users = await Users.getUsersByDepartment({ department });
         res.status(200).json(users);
     } catch (error) {
         console.log(error);
@@ -48,7 +49,7 @@ router.post('/register', async (req, res) => {
 
             const user = await Users.addUser(newUser);
             const token = generateToken(user);
-            
+
             res.status(201).json({user, token });
         } catch(error) {
             console.log(error);
@@ -64,7 +65,8 @@ router.post('/register', async (req, res) => {
 function generateToken(user) {
     const payload = {
         subject: user.id,
-        username: user.username
+        username: user.username,
+        department: user.department
     };
 
     const options = {
@@ -89,7 +91,5 @@ function validateUser(req, res, next) {
         res.status(401).json({ error: 'Token is invaild' });
     }
 };
-
-
 
 module.exports = router;

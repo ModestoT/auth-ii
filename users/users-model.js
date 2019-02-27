@@ -5,6 +5,7 @@ module.exports = {
     getUserBy,
     getUserById,
     addUser,
+    getUsersByDepartment,
     remove
 };
 
@@ -32,4 +33,8 @@ function remove(id) {
     return db('users')
         .where({ id })
         .del();
+}
+
+function getUsersByDepartment(department) {
+    return db('users').where(department);
 }
