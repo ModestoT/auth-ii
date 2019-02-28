@@ -21,17 +21,20 @@ class UsersList extends React.Component {
 
     render() {
         return (
-            <div className="users-list-wrapper">
-                {this.state.users.map( user => {
-                    return (
-                        <div className="user-wrapper" key={user.id}>
-                            <h1>Username: {user.username}</h1>
-                            <p>ID: {user.id}</p>
-                            <p>Department: {user.department}</p>
-                        </div>
-                    );
-                })}
-            </div>
+            <>
+                <h1>Users List</h1>
+                <div className="users-list-wrapper">
+                    {this.state.users.map( user => {
+                        return (
+                            <div className="user-wrapper" key={user.id}>
+                                <h2>Username: {user.username}</h2>
+                                <p>ID: {user.id}</p>
+                                <p>Department: {user.department}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+            </>
         );
     }
 }

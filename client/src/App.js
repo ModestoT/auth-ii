@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, NavLink } from 'react-router-dom';
 
 import './App.css';
 import LoginPage from './components/LoginPage';
@@ -18,7 +18,8 @@ class App extends Component {
     return (
       <div className="App">
         <nav>
-          <button onClick={this.signOut}>Signout</button>
+          <NavLink to="/users">Users</NavLink>
+          <button className = "sign-out" onClick={this.signOut}>Signout</button>
         </nav>
         <Route exact path = "/" component={LoginPage} />
         <Route path = "/register" component={RegisterPage} />

@@ -12,22 +12,37 @@ class RegisterPage extends React.Component {
 
     handleInput = e => {
         this.setState({ [e.target.name]: e.target.value });
+
+        if(this.state.username.length < 3 || this.state.password.length < 8 || !this.state.department){
+            this.setState({ nameError: 'Username must be atleast 3 characters long' });
+            if(this.state.username.length >= 2){
+                this.setState({ passwordError: 'Password must be atleast 8 characters long', nameError: '' });
+            }
+        } else {
+            this.setState({ passwordError: '' });
+        }
+
     }
 
     register = e => {
         e.preventDefault();
 
         const user = { username: this.state.username, password: this.state.password, department: this.state.department };
-
-        makeAxios()
+        
+        if(this.state.nameError || this.state.passwordError ){
+          return null;
+        } else {
+            makeAxios()
             .post('register', user)
             .then( res => {
-                localStorage.setItem('AuthToken', res.data.token)
+                localStorage.setItem('AuthToken', res.data.token);
                 this.props.history.push('/users');
                 alert('Account Created!');
             })
-            .catch( err => console.log(err));
+            .catch( err => this.setState({ error: err.response.data.error }));
+        }
     }
+
 
     render() {
         return(
@@ -35,9 +50,13 @@ class RegisterPage extends React.Component {
                 <h1>Register</h1>
                 <form onSubmit={this.register}>
                     <input type="text" name="username" placeholder="Username" value={this.state.username} onChange={this.handleInput} />
+                    <p style={{ color:'red' }}>{this.state.nameError ? this.state.nameError : null}</p>
                     <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInput} />
+                    <p style={{ color:'red' }}>{this.state.passwordError ? this.state.passwordError : null}</p>
                     <input type="text" name="department" placeholder="Department" value={this.state.department} onChange={this.handleInput} />
+                    <p style={{ color:'red' }}>{this.state.departmentError ? this.state.departmentError : null}</p>
                     <button>Register</button>
+                    <div style={{ color:'red' }}>{this.state.error ? this.state.error : null }</div>
                 </form>
             </div>
         );

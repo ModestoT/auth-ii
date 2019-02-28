@@ -25,7 +25,7 @@ class LoginPage extends React.Component {
                 this.props.history.push('/users');
                 alert(res.data.message);
             })
-            .catch( err => console.log(err));
+            .catch( err => this.setState({error: err.response.data.error }));
     }
 
     render() {
@@ -36,7 +36,8 @@ class LoginPage extends React.Component {
                     <input type="text" name="username" placeholder="Username" value={this.state.username} onChange={this.handleInput} />
                     <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleInput} />
                     <button>Login</button>
-                    <button onClick={(e) => this.props.history.push('/register')}>Register</button>
+                    <button className="register" onClick={(e) => this.props.history.push('/register')}>Register</button>
+                    <div style={{color: 'red'}}>{this.state.error ? this.state.error: null}</div>
                 </form>
             </div>
         );
