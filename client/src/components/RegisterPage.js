@@ -13,11 +13,14 @@ class RegisterPage extends React.Component {
     handleInput = e => {
         this.setState({ [e.target.name]: e.target.value });
 
-        if(this.state.username.length < 3 || this.state.password.length < 8 || !this.state.department){
-            this.setState({ nameError: 'Username must be atleast 3 characters long' });
-            if(this.state.username.length >= 2){
-                this.setState({ passwordError: 'Password must be atleast 8 characters long', nameError: '' });
-            }
+        if(e.target.name === 'username' && this.state.username.length < 2){
+            this.setState({ nameError: 'Username must be atleast 3 characters long' }); 
+        } else{
+            this.setState({ nameError: '' });
+        }
+
+        if(e.target.name === 'password' && this.state.password.length < 7){
+            this.setState({ passwordError: 'Password must be atleast 8 characters long' });
         } else {
             this.setState({ passwordError: '' });
         }
@@ -29,7 +32,7 @@ class RegisterPage extends React.Component {
 
         const user = { username: this.state.username, password: this.state.password, department: this.state.department };
         
-        if(this.state.nameError || this.state.passwordError ){
+        if(this.state.nameError || this.state.passwordError){
           return null;
         } else {
             makeAxios()
