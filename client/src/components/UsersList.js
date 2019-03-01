@@ -11,7 +11,7 @@ class UsersList extends React.Component {
         makeAxios()
             .get('/users')
             .then( res => this.setState({ users: res.data }))
-            .catch( err => console.log(err));
+            .catch( err => console.log(err.response));
 
         if(!localStorage.getItem('AuthToken')){
             this.props.history.push('/');
